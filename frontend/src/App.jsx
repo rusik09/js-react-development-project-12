@@ -1,35 +1,52 @@
-import { useState } from 'react';
-import reactLogo from './assets/react.svg';
-import viteLogo from '/vite.svg';
-import './App.css';
+/* eslint-disable react/prop-types */
+import 'bootstrap/dist/css/bootstrap.min.css';
+import { useSelector } from 'react-redux';
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Navigate,
+  useLocation,
+} from 'react-router-dom';
 
-function App() {
-  const [count, setCount] = useState(0);
+import Header from './Components/Header.jsx';
+import Login from './Components/Login.jsx';
+import MainPage from './Components/MainPage.jsx';
+import PageNotFound from './Components/PageNotFound.jsx';
 
-  return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+import './index.css';
+
+const PrivateRoute = ({ children }) => {
+  const loggedIn = useSelector((state) => state.auth.loggedIn);
+  const location = useLocation();
+
+  return loggedIn ? (
+    children
+  ) : (
+    <Navigate to="/login" state={{ from: location }} />
   );
-}
+};
+
+const App = () => (
+  <Router>
+    <div className="vh-100 d-flex flex-column">
+      <Header />
+      <div className="flex-grow-1">
+        <Routes>
+          <Route
+            path="/"
+            element={
+              <PrivateRoute>
+                <MainPage />
+              </PrivateRoute>
+            }
+          />
+          <Route path="/login" element={<Login />} />
+          <Route path="*" element={<PageNotFound />} />
+        </Routes>
+      </div>
+    </div>
+  </Router>
+);
 
 export default App;

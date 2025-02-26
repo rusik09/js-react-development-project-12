@@ -1,5 +1,6 @@
-import { Link } from 'react-router-dom';
 import { Container } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
+
 import notFoundImage from '/src/assets/404-D_FLHmTM.svg';
 
 const PageNotFound = () => {

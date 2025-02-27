@@ -11,7 +11,7 @@ import {
 
 import Header from './Components/Header.jsx';
 import Login from './Components/Login.jsx';
-import MainPage from './Components/MainPage.jsx';
+import ChatPage from './Components/ChatPage.jsx';
 import PageNotFound from './Components/PageNotFound.jsx';
 
 import './index.css';
@@ -37,7 +37,7 @@ const App = () => (
             path="/"
             element={
               <PrivateRoute>
-                <MainPage />
+                <ChatPage />
               </PrivateRoute>
             }
           />
